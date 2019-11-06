@@ -39,4 +39,8 @@ public class Spot {
     public void setY(int y) {
         this.y = y;
     }
+
+    public String getId(){
+        return piece == null ? ". " : piece.getId();
+    }
 }

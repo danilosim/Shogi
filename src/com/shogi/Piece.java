@@ -4,9 +4,11 @@ public abstract class Piece {
     private String name;
     private boolean black;
     private boolean captured;
+    private String id;
 
-    public Piece (boolean black){
+    public Piece (boolean black, String id){
         this.black = black;
+        this.id = id;
     }
 
     public boolean isBlack(){
@@ -26,5 +28,21 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Board board, Spot startingSpot, Spot endingSpot);
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 }
