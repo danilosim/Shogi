@@ -12,6 +12,30 @@ public class SilverGeneral extends Piece {
 
     @Override
     public boolean canMove(Board board, Spot startingSpot, Spot endingSpot) {
+
+        if(endingSpot.getPiece() != null && endingSpot.getPiece().isBlack() == startingSpot.getPiece().isBlack()){
+            return false;
+        }
+
+        int distY = Math.abs(startingSpot.getY() - endingSpot.getY());
+        int distX = Math.abs(startingSpot.getX() - endingSpot.getX());
+
+        if(distX == 1 && distY == 1){
+            return true;
+        }
+
+        if(startingSpot.getPiece().isBlack()){
+            if (startingSpot.getY() == endingSpot.getY() - 1 && distX == 0){
+                return true;
+            }
+        }
+
+        if(!startingSpot.getPiece().isBlack()){
+            if (startingSpot.getY() == endingSpot.getY() + 1 && distX == 0){
+                return true;
+            }
+        }
+
         return false;
     }
 }

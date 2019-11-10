@@ -12,6 +12,15 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Board board, Spot startingSpot, Spot endingSpot) {
+        if (endingSpot.getPiece() != null && endingSpot.getPiece().isBlack() == startingSpot.getPiece().isBlack()){
+            return false;
+        }
+        if (startingSpot.getX() == endingSpot.getX()){
+            if((startingSpot.getPiece().isBlack() && startingSpot.getY() + 1 == endingSpot.getY()) || (!startingSpot.getPiece().isBlack() && startingSpot.getY() - 1 == endingSpot.getY())){
+                return true;
+            }
+        }
         return false;
     }
+
 }
