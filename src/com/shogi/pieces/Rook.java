@@ -6,8 +6,13 @@ import com.shogi.Spot;
 
 public class Rook extends Piece {
 
+    private final String baseId = "r";
+    private final String promotedId = "R";
+    private boolean isPromoted = false;
+
     public Rook(boolean black) {
-        super(black, black ? "R^" : "Rv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -48,5 +53,21 @@ public class Rook extends Piece {
             return true;
         }
         return false;
+    }
+
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public String getPromotedId() {
+        return promotedId;
+    }
+
+    public boolean isPromoted() {
+        return isPromoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
     }
 }

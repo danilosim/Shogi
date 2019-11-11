@@ -6,8 +6,11 @@ import com.shogi.Spot;
 
 public class King extends Piece {
 
+    private final String baseId = "K";
+
     public King(boolean black) {
-        super(black, black ? "K^" : "Kv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -27,7 +30,22 @@ public class King extends Piece {
     }
 
     public boolean isAttacked(Board board, Spot spot){
-        //TODO
+        Spot[][] spots = board.getSpots();
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                if(spots[i][j].getPiece() != null){
+                    if(spots[i][j].getPiece().isBlack() != this.isBlack()){
+                        if (spots[i][j].getPiece().canMove(board, board.getSpot(i, j), spot)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
+    }
+
+    public String getBaseId() {
+        return baseId;
     }
 }

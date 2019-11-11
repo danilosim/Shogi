@@ -6,8 +6,13 @@ import com.shogi.Spot;
 
 public class Lance extends Piece {
 
+    private final String baseId = "l";
+    private final String promotedId = "L";
+    private boolean isPromoted = false;
+
     public Lance(boolean black) {
-        super(black, black ? "L^" : "Lv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -39,5 +44,21 @@ public class Lance extends Piece {
         }
 
         return false;
+    }
+
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public String getPromotedId() {
+        return promotedId;
+    }
+
+    public boolean isPromoted() {
+        return isPromoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
     }
 }

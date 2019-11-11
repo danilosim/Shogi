@@ -90,4 +90,12 @@ public class Board {
     public void setSpot(Piece piece, int x, int y){
         this.spots[x][y].setPiece(piece);
     }
+
+    public Spot[][] getSpots() {
+        return spots;
+    }
+
+    public void setSpots(Spot[][] spots) {
+        this.spots = spots;
+    }
 }

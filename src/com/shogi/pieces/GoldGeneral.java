@@ -6,8 +6,11 @@ import com.shogi.Spot;
 
 public class GoldGeneral extends Piece {
 
+    private final String baseId = "G";
+
     public GoldGeneral(boolean black) {
-        super(black, black ? "G^" : "Gv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -37,4 +40,5 @@ public class GoldGeneral extends Piece {
 
         return false;
     }
+
 }

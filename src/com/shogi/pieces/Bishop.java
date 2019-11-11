@@ -6,8 +6,13 @@ import com.shogi.Spot;
 
 public class Bishop extends Piece {
 
+    private final String baseId = "b";
+    private final String promotedId = "B";
+    private boolean isPromoted = false;
+
     public Bishop(boolean black) {
-        super(black, black ? "B^" : "Bv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -44,5 +49,21 @@ public class Bishop extends Piece {
             return true;
         }
         return false;
+    }
+
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public String getPromotedId() {
+        return promotedId;
+    }
+
+    public boolean isPromoted() {
+        return isPromoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
     }
 }

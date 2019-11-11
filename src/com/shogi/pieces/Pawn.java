@@ -6,8 +6,13 @@ import com.shogi.Spot;
 
 public class Pawn extends Piece {
 
+    private final String baseId = "p";
+    private final String promotedId = "P";
+    private boolean isPromoted = false;
+
     public Pawn(boolean black) {
-        super(black, black ? "P^" : "Pv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -23,4 +28,19 @@ public class Pawn extends Piece {
         return false;
     }
 
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public String getPromotedId() {
+        return promotedId;
+    }
+
+    public boolean isPromoted() {
+        return isPromoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
+    }
 }

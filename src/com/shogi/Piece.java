@@ -1,12 +1,12 @@
 package com.shogi;
 
 public abstract class Piece {
-    private String name;
-    private boolean black;
-    private boolean captured;
-    private String id;
+    protected boolean black;
+    protected boolean captured;
+    protected String id;
+    protected String baseId;
 
-    public Piece (boolean black, String id){
+    public Piece (boolean black){
         this.black = black;
         this.id = id;
     }
@@ -29,14 +29,6 @@ public abstract class Piece {
 
     public abstract boolean canMove(Board board, Spot startingSpot, Spot endingSpot);
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getId() {
         return id;
     }
@@ -45,4 +37,11 @@ public abstract class Piece {
         this.id = id;
     }
 
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public void setBaseId(String baseId) {
+        this.baseId = baseId;
+    }
 }

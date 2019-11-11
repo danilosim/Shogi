@@ -6,8 +6,13 @@ import com.shogi.Spot;
 
 public class Knight extends Piece {
 
+    private final String baseId = "n";
+    private final String promotedId = "N";
+    private boolean isPromoted = false;
+
     public Knight(boolean black) {
-        super(black, black ? "N^" : "Nv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -28,5 +33,21 @@ public class Knight extends Piece {
         }
 
         return false;
+    }
+
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public String getPromotedId() {
+        return promotedId;
+    }
+
+    public boolean isPromoted() {
+        return isPromoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
     }
 }

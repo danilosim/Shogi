@@ -6,8 +6,13 @@ import com.shogi.Spot;
 
 public class SilverGeneral extends Piece {
 
+    private final String baseId = "s";
+    private final String promotedId = "S";
+    private boolean isPromoted = false;
+
     public SilverGeneral(boolean black) {
-        super(black, black ? "S^" : "Sv");
+        super(black);
+        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -37,5 +42,21 @@ public class SilverGeneral extends Piece {
         }
 
         return false;
+    }
+
+    public String getBaseId() {
+        return baseId;
+    }
+
+    public String getPromotedId() {
+        return promotedId;
+    }
+
+    public boolean isPromoted() {
+        return isPromoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
     }
 }

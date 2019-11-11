@@ -9,6 +9,7 @@ public class Game {
     private Board board;
     private Player currentTurn;
     private List<Move> movesPlayed = new ArrayList<>();
+    private GameStatus status = GameStatus.ACTIVE;
 
     public void initialize(Player p1, Player p2){
         players[0] = p1;
@@ -33,19 +34,34 @@ public class Game {
         if (startingSpot == endingSpot){
             return false;
         }
+
+        if(startX == 9){
+            Drop drop = new Drop(player, endingSpot);
+            return this.makeDrop(drop, player);
+        }
+
         Move move = new Move(player, startingSpot, endingSpot);
         return this.makeMove(move, player);
     }
 
+    private boolean makeDrop(Drop drop, Player player){
+        return false;
+    }
+
     private boolean makeMove(Move move, Player player){
         Piece piece = move.getStartingSpot().getPiece();
-        if (piece == null || piece.isBlack() != player.isBlack() || player != currentTurn){
-//            System.out.println("You can only move pieces that belong to you");
+
+        if (piece == null){
+            System.out.println("There's no piece on that spot");
+            return false;
+        }
+
+        if (piece.isBlack() != player.isBlack() || player != currentTurn){
+            System.out.println("You can only move pieces that belong to you");
             return false;
         }
 
         if (!piece.canMove(board, move.getStartingSpot(), move.getEndingSpot())){
-//            System.out.println("That is not a valid move");
             return false;
         }
 
@@ -53,6 +69,9 @@ public class Game {
         if (destPiece != null) {
             destPiece.setCaptured(true);
             move.setPieceCaptured(destPiece);
+            destPiece.setBlack(currentTurn.isBlack());
+            destPiece.setId(destPiece.getBaseId() + (currentTurn.isBlack() ? "^" : "v"));
+            currentTurn.addCapturedPiece(destPiece);
         }
 
         movesPlayed.add(move);
