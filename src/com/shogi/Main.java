@@ -78,7 +78,7 @@ public class Main {
             /* Promotion */
 
             if ((current.isBlack() && (Integer.parseInt(fromArray[1]) >= 6 || Integer.parseInt(toArray[1]) >= 6)) || (!current.isBlack() && (Integer.parseInt(fromArray[1]) <= 2 || Integer.parseInt(toArray[1]) <= 2))){
-                if (!piece.isPromoted){
+                if (!piece.isPromoted && game.getLastMove().getStartingSpot() != null){
                     if (piece.getClass() != King.class && piece.getClass() != GoldGeneral.class){
                         String response;
                         do{

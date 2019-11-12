@@ -1,7 +1,7 @@
 package com.shogi;
 
 public class Spot {
-    private Piece piece;
+    private Piece piece = null;
     private int x;
     private int y;
 

@@ -98,4 +98,20 @@ public class Board {
     public void setSpots(Spot[][] spots) {
         this.spots = spots;
     }
+
+    public Spot getKing(boolean black){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                Piece piece = spots[i][j].getPiece();
+                if(piece != null && piece.getClass() == King.class && piece.isBlack() == black){
+                    return spots[i][j];
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean isCheckmate(boolean black){
+        return false;
+    }
 }

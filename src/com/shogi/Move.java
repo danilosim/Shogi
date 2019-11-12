@@ -12,6 +12,8 @@ public class Move {
         this.player = player;
         this.startingSpot = startingSpot;
         this.endingSpot = endingSpot;
+        this.pieceMoved = startingSpot != null ? startingSpot.getPiece() : null;
+        this.pieceCaptured = endingSpot.getPiece();
     }
 
     public Player getPlayer() {

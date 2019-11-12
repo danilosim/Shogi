@@ -35,6 +35,7 @@ public class King extends Piece {
                 if(spots[i][j].getPiece() != null){
                     if(spots[i][j].getPiece().isBlack() != this.isBlack()){
                         if (spots[i][j].getPiece().canMove(board, board.getSpot(i, j), spot)){
+                            System.out.println("Invalid move, you are in check");
                             return true;
                         }
                     }
