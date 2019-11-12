@@ -37,15 +37,19 @@ public class Game {
 
         if(startX == 9){
             Drop drop = new Drop(player, endingSpot);
-            return this.makeDrop(drop, player);
+            return this.makeDrop(drop, startY, player);
         }
 
         Move move = new Move(player, startingSpot, endingSpot);
         return this.makeMove(move, player);
     }
 
-    private boolean makeDrop(Drop drop, Player player){
+    private boolean makeDrop(Drop drop, int pieceNumber, Player player){
         return false;
+    }
+
+    public void promote(int x, int y){
+        this.board.getSpot(x, y).getPiece().setPromoted(true);
     }
 
     private boolean makeMove(Move move, Player player){
@@ -70,7 +74,7 @@ public class Game {
             destPiece.setCaptured(true);
             move.setPieceCaptured(destPiece);
             destPiece.setBlack(currentTurn.isBlack());
-            destPiece.setId(destPiece.getBaseId() + (currentTurn.isBlack() ? "^" : "v"));
+            destPiece.setPromoted(false);
             currentTurn.addCapturedPiece(destPiece);
         }
 

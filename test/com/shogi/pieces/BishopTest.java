@@ -28,7 +28,7 @@ class BishopTest {
         assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(0,2)));
 
         //Negatives
-        assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(4,7)));
+        assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(4, 7)));
         assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(4, 1)));
         assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(6, 6)));
         assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(2, 6)));
@@ -60,5 +60,37 @@ class BishopTest {
         assertFalse(bishop.canMove(board, board.getSpot(4,3), board.getSpot(6,1)));
         assertFalse(bishop.canMove(board, board.getSpot(4,3), board.getSpot(7,0)));
 
+    }
+
+    @Test
+    void movePromotedBishopFreeBoard(){
+        Bishop bishop = new Bishop(true);
+        bishop.setPromoted(true);
+        board.setSpot(bishop, 4,6);
+
+        //Positives
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(5,7)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(5,5)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(6,8)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(6,4)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(7,3)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(8,2)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(3,7)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(3,5)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(2,8)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(2,4)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(1,3)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(0,2)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(4,7)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(4,5)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(3,6)));
+        assertTrue(bishop.canMove(board, board.getSpot(4,6), board.getSpot(5,6)));
+
+        //Negatives
+        assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(4, 1)));
+        assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(6, 6)));
+        assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(2, 6)));
+        assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(3, 4)));
+        assertFalse(bishop.canMove(board, board.getSpot(4,6), board.getSpot(0, 8)));
     }
 }

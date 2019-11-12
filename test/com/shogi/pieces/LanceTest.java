@@ -85,4 +85,27 @@ class LanceTest {
         assertFalse(lance.canMove(board, board.getSpot(4,5), board.getSpot(4,0)));
     }
 
+    @Test
+    void movePromotedLanceFreeBoard(){
+        Lance lance = new Lance(true);
+        lance.setPromoted(true);
+        board.setSpot(lance, 4,6);
+
+        //Positives
+        assertTrue(lance.canMove(board, board.getSpot(4,6), board.getSpot(4,7)));
+        assertTrue(lance.canMove(board, board.getSpot(4,6), board.getSpot(4,5)));
+        assertTrue(lance.canMove(board, board.getSpot(4,6), board.getSpot(3,6)));
+        assertTrue(lance.canMove(board, board.getSpot(4,6), board.getSpot(3,7)));
+        assertTrue(lance.canMove(board, board.getSpot(4,6), board.getSpot(5,6)));
+        assertTrue(lance.canMove(board, board.getSpot(4,6), board.getSpot(5,7)));
+
+
+        //Negatives
+        assertFalse(lance.canMove(board, board.getSpot(4,6), board.getSpot(3,5)));
+        assertFalse(lance.canMove(board, board.getSpot(4,6), board.getSpot(5,5)));
+        assertFalse(lance.canMove(board, board.getSpot(4,6), board.getSpot(8,8)));
+        assertFalse(lance.canMove(board, board.getSpot(4,6), board.getSpot(0,1)));
+        assertFalse(lance.canMove(board, board.getSpot(4,6), board.getSpot(2,7)));
+    }
+
 }

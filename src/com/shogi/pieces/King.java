@@ -10,7 +10,6 @@ public class King extends Piece {
 
     public King(boolean black) {
         super(black);
-        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -45,7 +44,8 @@ public class King extends Piece {
         return false;
     }
 
-    public String getBaseId() {
-        return baseId;
+    public String getId(){
+        return this.baseId + (this.isBlack() ? "^" : "v");
     }
+
 }

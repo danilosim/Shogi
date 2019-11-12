@@ -85,4 +85,26 @@ class SilverGeneralTest {
         assertFalse(silverGeneral.canMove(board, board.getSpot(4,5), board.getSpot(5,6)));
     }
 
+    void movePromotedSilverGeneralFreeBoard(){
+        SilverGeneral silverGeneral = new SilverGeneral(true);
+        silverGeneral.setPromoted(true);
+        board.setSpot(silverGeneral, 4,6);
+
+        //Positives
+        assertTrue(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(4,7)));
+        assertTrue(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(4,5)));
+        assertTrue(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(3,6)));
+        assertTrue(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(3,7)));
+        assertTrue(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(5,6)));
+        assertTrue(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(5,7)));
+
+
+        //Negatives
+        assertFalse(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(3,5)));
+        assertFalse(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(5,5)));
+        assertFalse(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(8,8)));
+        assertFalse(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(0,1)));
+        assertFalse(silverGeneral.canMove(board, board.getSpot(4,6), board.getSpot(2,7)));
+    }
+
 }

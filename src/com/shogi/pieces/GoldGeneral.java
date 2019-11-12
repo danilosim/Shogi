@@ -10,7 +10,6 @@ public class GoldGeneral extends Piece {
 
     public GoldGeneral(boolean black) {
         super(black);
-        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -39,6 +38,10 @@ public class GoldGeneral extends Piece {
         }
 
         return false;
+    }
+
+    public String getId(){
+        return this.baseId + (this.isBlack() ? "^" : "v");
     }
 
 }

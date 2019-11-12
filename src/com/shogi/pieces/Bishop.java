@@ -8,11 +8,9 @@ public class Bishop extends Piece {
 
     private final String baseId = "b";
     private final String promotedId = "B";
-    private boolean isPromoted = false;
 
     public Bishop(boolean black) {
         super(black);
-        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -20,6 +18,15 @@ public class Bishop extends Piece {
         if(endingSpot.getPiece() != null && endingSpot.getPiece().isBlack() == startingSpot.getPiece().isBlack()){
             return false;
         }
+
+        if(this.isPromoted){
+            int distX = Math.abs(startingSpot.getX() - endingSpot.getX());
+            int distY = Math.abs(startingSpot.getY() - endingSpot.getY());
+            if(distX + distY == 1){
+                return true;
+            }
+        }
+
         int xDifference = endingSpot.getX() - startingSpot.getX();
         if (endingSpot.getY() == startingSpot.getY() + xDifference || endingSpot.getY() == startingSpot.getY() - xDifference){
             int yDifference = endingSpot.getY() - startingSpot.getY();
@@ -51,19 +58,12 @@ public class Bishop extends Piece {
         return false;
     }
 
-    public String getBaseId() {
-        return baseId;
+    public String getId(){
+        if (this.isPromoted){
+            return this.promotedId + (this.isBlack() ? "^" : "v");
+        } else {
+            return this.baseId + (this.isBlack() ? "^" : "v");
+        }
     }
 
-    public String getPromotedId() {
-        return promotedId;
-    }
-
-    public boolean isPromoted() {
-        return isPromoted;
-    }
-
-    public void setPromoted(boolean promoted) {
-        isPromoted = promoted;
-    }
 }

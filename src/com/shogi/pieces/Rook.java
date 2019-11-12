@@ -8,17 +8,23 @@ public class Rook extends Piece {
 
     private final String baseId = "r";
     private final String promotedId = "R";
-    private boolean isPromoted = false;
 
     public Rook(boolean black) {
         super(black);
-        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
     public boolean canMove(Board board, Spot startingSpot, Spot endingSpot) {
         if(endingSpot.getPiece() != null && endingSpot.getPiece().isBlack() == startingSpot.getPiece().isBlack()){
             return false;
+        }
+
+        if (this.isPromoted){
+            int distX = Math.abs(endingSpot.getX() - startingSpot.getX());
+            int distY = Math.abs(endingSpot.getY() - startingSpot.getY());
+            if (distX + distY == 2){
+                return true;
+            }
         }
 
         if(endingSpot.getX() == startingSpot.getX()){
@@ -55,19 +61,12 @@ public class Rook extends Piece {
         return false;
     }
 
-    public String getBaseId() {
-        return baseId;
+    public String getId(){
+        if (this.isPromoted){
+            return this.promotedId + (this.isBlack() ? "^" : "v");
+        } else {
+            return this.baseId + (this.isBlack() ? "^" : "v");
+        }
     }
 
-    public String getPromotedId() {
-        return promotedId;
-    }
-
-    public boolean isPromoted() {
-        return isPromoted;
-    }
-
-    public void setPromoted(boolean promoted) {
-        isPromoted = promoted;
-    }
 }

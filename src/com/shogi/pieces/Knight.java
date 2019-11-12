@@ -8,11 +8,9 @@ public class Knight extends Piece {
 
     private final String baseId = "n";
     private final String promotedId = "N";
-    private boolean isPromoted = false;
 
     public Knight(boolean black) {
         super(black);
-        this.id = baseId + (this.black ? "^" : "v");
     }
 
     @Override
@@ -21,33 +19,50 @@ public class Knight extends Piece {
             return false;
         }
 
-        int distX = endingSpot.getX() - startingSpot.getX();
-        int distY = endingSpot.getY() - startingSpot.getY();
+        if (this.isPromoted){
+            int distY = Math.abs(startingSpot.getY() - endingSpot.getY());
+            int distX = Math.abs(startingSpot.getX() - endingSpot.getX());
 
-        if(startingSpot.getPiece().isBlack() && Math.abs(distX) == 1 && distY == 2){
-            return true;
+            if(distX + distY == 1){
+                return true;
+            }
+
+            if(startingSpot.getPiece().isBlack()){
+                if (startingSpot.getY() == endingSpot.getY() - 1 && distX == 1){
+                    return true;
+                }
+            }
+
+            if(!startingSpot.getPiece().isBlack()){
+                if (startingSpot.getY() == endingSpot.getY() + 1 && distX == 1){
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            int distX = endingSpot.getX() - startingSpot.getX();
+            int distY = endingSpot.getY() - startingSpot.getY();
+
+            if(startingSpot.getPiece().isBlack() && Math.abs(distX) == 1 && distY == 2){
+                return true;
+            }
+
+            if(!startingSpot.getPiece().isBlack() && Math.abs(distX) == 1 && distY == -2){
+                return true;
+            }
+
+            return false;
         }
+    }
 
-        if(!startingSpot.getPiece().isBlack() && Math.abs(distX) == 1 && distY == -2){
-            return true;
+
+    public String getId(){
+        if (this.isPromoted){
+            return this.promotedId + (this.isBlack() ? "^" : "v");
+        } else {
+            return this.baseId + (this.isBlack() ? "^" : "v");
         }
-
-        return false;
     }
 
-    public String getBaseId() {
-        return baseId;
-    }
-
-    public String getPromotedId() {
-        return promotedId;
-    }
-
-    public boolean isPromoted() {
-        return isPromoted;
-    }
-
-    public void setPromoted(boolean promoted) {
-        isPromoted = promoted;
-    }
 }
