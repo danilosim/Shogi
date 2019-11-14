@@ -42,9 +42,11 @@ public class Game {
 
         Spot startingSpot = board.getSpot(startX, startY);
         if (startingSpot == null || endingSpot == null){
+            System.out.println("Those are not valid spot locations");
             return false;
         }
         if (startingSpot == endingSpot){
+            System.out.println("You cannot move a piece to the same place it's located");
             return false;
         }
 
@@ -68,14 +70,17 @@ public class Game {
 
         if (piece.getClass() == Knight.class){
             if (currentTurn.isBlack() && drop.getEndingSpot().getY() >= 7){
+                System.out.println("Knights cannot be dropped on the two last ranks");
                 return false;
             } else if (!currentTurn.isBlack() && drop.getEndingSpot().getY() <= 1){
+                System.out.println("Knights cannot be dropped on the two last ranks");
                 return false;
             }
         }
 
         if (piece.getClass() == Lance.class || piece.getClass() == Pawn.class){
             if (currentTurn.isBlack() && drop.getEndingSpot().getY() == 8){
+                System.out.println("Lances and Pawns cannot be dropped on the last rank");
                 return false;
             } else if (!currentTurn.isBlack() && drop.getEndingSpot().getY() == 0){
                 return false;
@@ -86,6 +91,7 @@ public class Game {
             for (int i = 0; i < 9; i++){
                 Piece checkPawn = board.getSpot(drop.getEndingSpot().getX(), i).getPiece();
                 if (checkPawn != null && checkPawn.getClass() == Pawn.class && !checkPawn.isPromoted() && checkPawn.isBlack() == currentTurn.isBlack()){
+                    System.out.println("Pawns cannot be dropped on columns where there's already an unpromoted pawn");
                     return false;
                 }
             }
@@ -96,6 +102,7 @@ public class Game {
             if (isCheckmate(currentTurn.isBlack())){
                 drop.getEndingSpot().setPiece(null);
                 piece.setCaptured(true);
+                System.out.println("Pawns cannot be dropped to instantly provoke checkmate");
                 return false;
             }
 
@@ -109,6 +116,7 @@ public class Game {
         Spot currentKingSpot = board.getKingSpot(currentTurn.isBlack());
         King currentKing = (King) currentKingSpot.getPiece();
         if (currentKing.isAttacked(board, currentKingSpot)){
+            System.out.println("You are still in check");
             drop.getEndingSpot().setPiece(null);
             piece.setCaptured(true);
             return false;
@@ -120,11 +128,19 @@ public class Game {
         if (isCheckmate(currentTurn.isBlack())){
             if (currentTurn.isBlack()){
                 this.status = GameStatus.BLACK_WIN;
-                System.out.println("Black won");
+                System.out.println("  +----------------------------+");
+                System.out.println("  |                            |");
+                System.out.println("  |          BLACK WON         |");
+                System.out.println("  |                            |");
+                System.out.println("  +----------------------------+");
                 System.exit(0);
             } else if (!currentTurn.isBlack()){
                 this.status = GameStatus.WHITE_WIN;
-                System.out.println("White won");
+                System.out.println("  +----------------------------+");
+                System.out.println("  |                            |");
+                System.out.println("  |          WHITE WON         |");
+                System.out.println("  |                            |");
+                System.out.println("  +----------------------------+");
                 System.exit(0);
             }
         }
@@ -156,6 +172,7 @@ public class Game {
         }
 
         if (!piece.canMove(board, move.getStartingSpot(), move.getEndingSpot())){
+            System.out.println("That's not a valid move");
             return false;
         }
 
@@ -168,6 +185,7 @@ public class Game {
         if (currentKing.isAttacked(board, currentKingSpot)){
             move.getStartingSpot().setPiece(move.getEndingSpot().getPiece());
             move.getEndingSpot().setPiece(captured);
+            System.out.println("You are still in check");
             return false;
         }
 
@@ -190,11 +208,19 @@ public class Game {
         if (isCheckmate(currentTurn.isBlack())){
             if (currentTurn.isBlack()){
                 this.status = GameStatus.BLACK_WIN;
-                System.out.println("Black won");
+                System.out.println("  +----------------------------+");
+                System.out.println("  |                            |");
+                System.out.println("  |          BLACK WON         |");
+                System.out.println("  |                            |");
+                System.out.println("  +----------------------------+");
                 System.exit(0);
             } else if (!currentTurn.isBlack()){
                 this.status = GameStatus.WHITE_WIN;
-                System.out.println("White won");
+                System.out.println("  +----------------------------+");
+                System.out.println("  |                            |");
+                System.out.println("  |          WHITE WON         |");
+                System.out.println("  |                            |");
+                System.out.println("  +----------------------------+");
                 System.exit(0);
             }
         }
@@ -219,14 +245,16 @@ public class Game {
         Spot[][] spots = board.getSpots();
 
         for (int i = 0; i < 9; i++){
-            for(int j = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
                 if (oppositeKing.canMove(board, oppositeKingSpot, spots[i][j])){
-                    System.out.println("King can move to " + spots[i][j].getX() + " " + spots[i][j].getY());
+//                    System.out.println("King can move to " + spots[i][j].getX() + " " + spots[i][j].getY());
                     return false;
                 }
             }
         }
 
+
+        //TODO Improve efficiency of algorithm (Probably designing a solution using HashMaps)
         for (int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 if (spots[i][j].getPiece() != null && spots[i][j].getPiece().isBlack() != currentTurn.isBlack()){
@@ -241,7 +269,7 @@ public class Game {
                                 if(!oppositeKing.isAttacked(board, oppositeKingSpot)){
                                     spots[x][y].setPiece(captured);
                                     spots[i][j].setPiece(moved);
-                                    System.out.println("Piece " + moved.getClass().getName() + " in " + spots[i][j].getX() + " " + spots[i][j].getY() + " can move to block check to " + spots[x][y].getX() + " " + spots[x][y].getY() );
+//                                    System.out.println("Piece " + moved.getClass().getName() + " in " + spots[i][j].getX() + " " + spots[i][j].getY() + " can move to block check to " + spots[x][y].getX() + " " + spots[x][y].getY() );
                                     return false;
                                 }
 
@@ -252,6 +280,11 @@ public class Game {
                     }
                 }
             }
+        }
+
+        Player defendingPlayer = players[0].isBlack() == black ? players[1] : players[0];
+        for (Piece piece : defendingPlayer.getCapturedPieces()){
+            for
         }
 
         return true;

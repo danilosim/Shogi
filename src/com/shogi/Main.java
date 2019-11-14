@@ -15,6 +15,7 @@ public class Main {
         Player whitePlayer = new Player(false);
 
         game.initialize(blackPlayer, whitePlayer);
+        System.out.println("Welcome to a new Shogi game\n");
 
         while (true) {
             boolean validMove = false;
