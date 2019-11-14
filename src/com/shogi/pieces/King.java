@@ -19,6 +19,10 @@ public class King extends Piece {
             return false;
         }
 
+        if (endingSpot.equals(startingSpot)){
+            return false;
+        }
+
         int x = Math.abs(startingSpot.getX() - endingSpot.getX());
         int y = Math.abs(startingSpot.getY() - endingSpot.getY());
         if (x <= 1 && y <= 1){
@@ -32,12 +36,15 @@ public class King extends Piece {
         Spot[][] spots = board.getSpots();
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
-                if(spots[i][j].getPiece() != null){
+                if(!spots[i][j].equals(spot) && spots[i][j].getPiece() != null){
                     if(spots[i][j].getPiece().isBlack() != this.isBlack()){
+                        Piece piece = spot.getPiece();
+                        spot.setPiece(null);
                         if (spots[i][j].getPiece().canMove(board, board.getSpot(i, j), spot)){
-                            System.out.println("Invalid move, you are in check");
+                            spot.setPiece(piece);
                             return true;
                         }
+                        spot.setPiece(piece);
                     }
                 }
             }

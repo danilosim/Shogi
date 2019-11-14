@@ -99,7 +99,7 @@ public class Board {
         this.spots = spots;
     }
 
-    public Spot getKing(boolean black){
+    public Spot getKingSpot(boolean black){
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
                 Piece piece = spots[i][j].getPiece();
@@ -111,7 +111,4 @@ public class Board {
         return null;
     }
 
-    public boolean isCheckmate(boolean black){
-        return false;
-    }
 }

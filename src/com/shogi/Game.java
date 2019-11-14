@@ -93,7 +93,7 @@ public class Game {
             drop.getEndingSpot().setPiece(piece);
             piece.setCaptured(false);
 
-            if (board.isCheckmate(currentTurn.isBlack())){
+            if (isCheckmate(currentTurn.isBlack())){
                 drop.getEndingSpot().setPiece(null);
                 piece.setCaptured(true);
                 return false;
@@ -105,10 +105,19 @@ public class Game {
 
         drop.getEndingSpot().setPiece(piece);
         piece.setCaptured(false);
+
+        Spot currentKingSpot = board.getKingSpot(currentTurn.isBlack());
+        King currentKing = (King) currentKingSpot.getPiece();
+        if (currentKing.isAttacked(board, currentKingSpot)){
+            drop.getEndingSpot().setPiece(null);
+            piece.setCaptured(true);
+            return false;
+        }
+
         player.deleteCapturedPiece(pieceNumber);
         movesPlayed.add(drop);
 
-        if (board.isCheckmate(currentTurn.isBlack())){
+        if (isCheckmate(currentTurn.isBlack())){
             if (currentTurn.isBlack()){
                 this.status = GameStatus.BLACK_WIN;
                 System.out.println("Black won");
@@ -154,7 +163,7 @@ public class Game {
         move.getEndingSpot().setPiece(move.getPieceMoved());
         move.getStartingSpot().setPiece(null);
 
-        Spot currentKingSpot = board.getKing(currentTurn.isBlack());
+        Spot currentKingSpot = board.getKingSpot(currentTurn.isBlack());
         King currentKing = (King) currentKingSpot.getPiece();
         if (currentKing.isAttacked(board, currentKingSpot)){
             move.getStartingSpot().setPiece(move.getEndingSpot().getPiece());
@@ -178,7 +187,7 @@ public class Game {
         move.getEndingSpot().setPiece(move.getPieceMoved());
         move.getStartingSpot().setPiece(null);
 
-        if (board.isCheckmate(currentTurn.isBlack())){
+        if (isCheckmate(currentTurn.isBlack())){
             if (currentTurn.isBlack()){
                 this.status = GameStatus.BLACK_WIN;
                 System.out.println("Black won");
@@ -194,6 +203,55 @@ public class Game {
             this.currentTurn = players[1];
         } else {
             this.currentTurn = players[0];
+        }
+
+        return true;
+    }
+
+    public boolean isCheckmate(boolean black){
+        Spot oppositeKingSpot = board.getKingSpot(!black);
+        King oppositeKing = (King) oppositeKingSpot.getPiece();
+
+        if(!oppositeKing.isAttacked(board, oppositeKingSpot)){
+            return false;
+        }
+
+        Spot[][] spots = board.getSpots();
+
+        for (int i = 0; i < 9; i++){
+            for(int j = 0; i < 9; i++){
+                if (oppositeKing.canMove(board, oppositeKingSpot, spots[i][j])){
+                    System.out.println("King can move to " + spots[i][j].getX() + " " + spots[i][j].getY());
+                    return false;
+                }
+            }
+        }
+
+        for (int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                if (spots[i][j].getPiece() != null && spots[i][j].getPiece().isBlack() != currentTurn.isBlack()){
+                    for (int x = 0; x < 9; x++){
+                        for (int y = 0; y < 9; y++){
+                            if (spots[i][j].getPiece().canMove(board, spots[i][j], spots[x][y])){
+                                Piece captured = spots[x][y].getPiece();
+                                Piece moved = spots[i][j].getPiece();
+                                spots[x][y].setPiece(moved);
+                                spots[i][j].setPiece(null);
+
+                                if(!oppositeKing.isAttacked(board, oppositeKingSpot)){
+                                    spots[x][y].setPiece(captured);
+                                    spots[i][j].setPiece(moved);
+                                    System.out.println("Piece " + moved.getClass().getName() + " in " + spots[i][j].getX() + " " + spots[i][j].getY() + " can move to block check to " + spots[x][y].getX() + " " + spots[x][y].getY() );
+                                    return false;
+                                }
+
+                                spots[x][y].setPiece(captured);
+                                spots[i][j].setPiece(moved);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return true;
