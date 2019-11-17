@@ -24,7 +24,8 @@ public class Board {
         }
     }
 
-    //Initialize
+    /* BOARD INITIALIZATION */
+
     public void initialize(){
 
         //Kings
@@ -72,6 +73,8 @@ public class Board {
 
     }
 
+    /* BOARD PRINTING */
+
     public void printBoard(){
         System.out.println("  +----------------------------+");
         for (int i = 8; i > -1; i--){
@@ -98,6 +101,8 @@ public class Board {
     public void setSpots(Spot[][] spots) {
         this.spots = spots;
     }
+
+    /* CURRENT SPOT OF THE KING OF A SPECIFIC COLOR */
 
     public Spot getKingSpot(boolean black){
         for (int i = 0; i < 9; i++){

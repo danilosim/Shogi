@@ -17,6 +17,8 @@ public class Main {
         game.initialize(blackPlayer, whitePlayer);
         System.out.println("Welcome to a new Shogi game\n");
 
+        /* LOOP FOR TURNS UNTIL GAME ENDING */
+
         while (true) {
             boolean validMove = false;
 
@@ -29,6 +31,7 @@ public class Main {
 
             game.getBoard().printBoard();
 
+            /* CAPTURED PIECES PRINT */
 
             int captured = current.getCapturedPieces().size();
             if (captured != 0) {
@@ -44,6 +47,8 @@ public class Main {
                 System.out.print("\n");
             }
 
+            /* MOVE INPUT & MOVE VALIDATION */
+
             String[] fromArray;
             String[] toArray;
             do {
@@ -58,7 +63,8 @@ public class Main {
                 }
             } while (!validMove);
 
-            /* Forced Promotion */
+            /* FORCED PROMOTION */
+
             Piece piece = game.getBoard().getSpot(Integer.parseInt(toArray[0]), Integer.parseInt(toArray[1])).getPiece();
             if (current.isBlack() && Integer.parseInt(toArray[1]) == 8 && (piece.getClass() == Knight.class || piece.getClass() == Pawn.class || piece.getClass() == Lance.class)){
                 game.promote(Integer.parseInt(toArray[0]), Integer.parseInt(toArray[1]));
@@ -76,7 +82,7 @@ public class Main {
                 game.promote(Integer.parseInt(toArray[0]), Integer.parseInt(toArray[1]));
             }
 
-            /* Promotion */
+            /* PROMOTION INPUT & VALIDATION */
 
             if ((current.isBlack() && (Integer.parseInt(fromArray[1]) >= 6 || Integer.parseInt(toArray[1]) >= 6)) || (!current.isBlack() && (Integer.parseInt(fromArray[1]) <= 2 || Integer.parseInt(toArray[1]) <= 2))){
                 if (!piece.isPromoted && game.getLastMove().getStartingSpot() != null){

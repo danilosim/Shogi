@@ -8,6 +8,11 @@ public class Player {
     private boolean blackSide;
     private List<Piece> capturedPieces = new ArrayList<>();
 
+    public Player (boolean blackSide){
+        this.blackSide = blackSide;
+    }
+
+
     public List<Piece> getCapturedPieces() {
         return capturedPieces;
     }
@@ -21,15 +26,17 @@ public class Player {
     }
 
     public Piece getCapturedPiece(int number){
-        return capturedPieces.get(number);
+        try {
+            Piece piece = capturedPieces.get(number);
+            return piece;
+        }catch (IndexOutOfBoundsException e){
+            return null;
+        }
+
     }
 
     public void deleteCapturedPiece(int number){
         capturedPieces.remove(capturedPieces.get(number));
-    }
-
-    public Player (boolean blackSide){
-        this.blackSide = blackSide;
     }
 
     public boolean isBlack(){
