@@ -1,5 +1,9 @@
 # Shogi Java
 
+Shogi is a game similar to chess. You can find the rules here:
+
+https://en.wikipedia.org/wiki/Shogi
+
 ### Features
 
 - Pieces movement
